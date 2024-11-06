@@ -1,9 +1,11 @@
 # Your Project's Title...
+
 Your project's description...
 
 ## Environments
-- Preview: https://main--{repo}--{owner}.aem.page/
-- Live: https://main--{repo}--{owner}.aem.live/
+
+- Preview: https://main--mdedge--ahmed-musallam.aem.page/
+- Live: https://main--mdedge--ahmed-musallam.aem.live/
 
 ## Installation
 
