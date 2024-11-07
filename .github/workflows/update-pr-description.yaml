@@ -13,7 +13,7 @@ jobs:
           ORIGIN="https://${{ env.BRANCH }}--${{ env.REPO }}--${{ env.OWNER }}.aem.page"
           PREFIX="- After: ${ORIGIN}"
           PR_UPDATED_BODY="$(
-            gh api /repos/$OWNER/$REPO/pulls/$PR_NUMBER | jq -r '.body' | sed 's/{repo}/${{ env.REPO }}/g' | sed 's/{branch}/${{ env.BRANCH }}/g' | sed 's/{owner}/${{ env.OWNER }}/g' | sed 's/{prefix}/${PREFIX}/g' 
+            gh api /repos/$OWNER/$REPO/pulls/$PR_NUMBER | jq -r '.body' | sed 's/{repo}/${{ env.REPO }}/g' | sed 's/{branch}/${{ env.BRANCH }}/g' | sed 's/{owner}/${{ env.OWNER }}/g' | sed 's/{prefix}/${{ PREFIX }}/g' 
           )"
           gh api --method PATCH /repos/$OWNER/$REPO/pulls/$PR_NUMBER -f body="$PR_UPDATED_BODY"
         env:
