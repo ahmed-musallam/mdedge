@@ -17,6 +17,7 @@ npm i
 
 ```sh
 npm run lint
+
 ```
 
 ## Local development
