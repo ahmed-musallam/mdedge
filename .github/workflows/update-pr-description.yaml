@@ -11,18 +11,15 @@ jobs:
       - name: Update PR Description
         run: |
           ORIGIN="https://${{ env.BRANCH }}--${{ env.REPO }}--${{ env.OWNER }}.aem.page"
-          echo origin: $ORIGIN
-          PREFIX="- After: $ORIGIN"
-          echo prefix: $PREFIX
+          PREFIX=$(printf '%s\n' "$PREFIX" | sed -e 's/[\/&]/\\&/g')
           echo "PREFIX=${PREFIX}" >> $GITHUB_ENV
           PR_UPDATED_BODY="$(
             gh api /repos/$OWNER/$REPO/pulls/$PR_NUMBER | jq -r '.body' | \
             sed 's/{repo}/${{ env.REPO }}/g' | \
             sed 's/{branch}/${{ env.BRANCH }}/g' | \
             sed 's/{owner}/${{ env.OWNER }}/g' | \
-            sed 's/{prefix}/${{ env.PREFIX }}/g'
+            sed 's/\\$/${{ env.PREFIX }}/g' 
           )"
-          gh api --method PATCH /repos/$OWNER/$REPO/pulls/$PR_NUMBER -f body="$PR_UPDATED_BODY"
         env:
           GITHUB_TOKEN: ${{ secrets.PROJECT_MOD_PERSONAL_TOKEN_CLASSIC }}
           OWNER: ${{ github.repository_owner }}
