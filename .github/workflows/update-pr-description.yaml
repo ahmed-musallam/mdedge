@@ -10,9 +10,14 @@ jobs:
     steps:
       - name: Update PR Description
         run: |
-          ORIGIN="https://${{ env.BRANCH }}--${{ env.REPO }}--${{ env.OWNER }}.aem.page"
-          PREFIX=$(printf '%s\n' "$PREFIX" | sed -e 's/[\/&]/\\&/g')
+          PREFIX="- After: ${ORIGIN}"
+          PREFIX=$(printf '%s\n' "${PREFIX}" | sed -e 's/[\/&]/\\&/g')
           echo "PREFIX=${PREFIX}" >> $GITHUB_ENV
+
+          echo PREFIX: $PREFIX
+          echo ${{ env.PREFIX }}
+          echo GITHUB_ENV: $GITHUB_ENV
+
           PR_UPDATED_BODY="$(
             gh api /repos/$OWNER/$REPO/pulls/$PR_NUMBER | jq -r '.body' | \
             sed 's/{repo}/${{ env.REPO }}/g' | \
@@ -26,3 +31,4 @@ jobs:
           REPO: ${{ github.event.repository.name }}
           BRANCH: ${{ github.head_ref }}
           PR_NUMBER: ${{ github.event.number }}
+          ORIGIN: https://${{ github.head_ref}}--${{ github.event.repository.name }}--${{ github.repository_owner }}.aem.page
