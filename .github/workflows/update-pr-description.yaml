@@ -18,7 +18,7 @@ jobs:
             sed 's/{repo}/${{ env.REPO }}/g' | \
             sed 's/{branch}/${{ env.BRANCH }}/g' | \
             sed 's/{owner}/${{ env.OWNER }}/g' | \
-            sed 's/\\$/${{ env.PREFIX }}/g' 
+            sed "s/\\$/$PREFIX/g"
           )"
         env:
           GITHUB_TOKEN: ${{ secrets.PROJECT_MOD_PERSONAL_TOKEN_CLASSIC }}
