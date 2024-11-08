@@ -8,14 +8,17 @@ jobs:
   track_pr:
     runs-on: ubuntu-latest
     steps:
-      - name: Update PR Description
+      - name: Prepare Env Variables
         run: |
           PREFIX="- After: ${ORIGIN}"
           PREFIX=$(printf '%s\n' "${PREFIX}" | sed -e 's/[\/&]/\\&/g')
           echo "PREFIX=${PREFIX}" >> $GITHUB_ENV
-
+        env:
+          GITHUB_TOKEN: ${{ secrets.PROJECT_MOD_PERSONAL_TOKEN_CLASSIC }}
+      - name: Update PR Description
+        run: |
           echo PREFIX: $PREFIX
-          echo ${{ env.PREFIX }}
+          echo "${{ env.PREFIX }}""
           echo GITHUB_ENV: $GITHUB_ENV
 
           PR_UPDATED_BODY="$(
